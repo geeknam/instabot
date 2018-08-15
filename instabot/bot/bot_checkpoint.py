@@ -6,7 +6,7 @@ from datetime import datetime
 import pickle
 import os
 
-CHECKPOINT_PATH = "{fname}.checkpoint"
+CHECKPOINT_PATH = "/tmp/{fname}.checkpoint"
 
 
 class Checkpoint(object):

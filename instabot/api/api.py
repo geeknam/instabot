@@ -37,16 +37,11 @@ class API(object):
         # Setup logging
         self.logger = logging.getLogger('[instabot_{}]'.format(id(self)))
 
-        fh = logging.FileHandler(filename='instabot.log')
-        fh.setLevel(logging.INFO)
-        fh.setFormatter(logging.Formatter('%(asctime)s %(message)s'))
-
         ch = logging.StreamHandler()
         ch.setLevel(logging.DEBUG)
         ch.setFormatter(logging.Formatter(
             '%(asctime)s - %(levelname)s - %(message)s'))
 
-        self.logger.addHandler(fh)
         self.logger.addHandler(ch)
         self.logger.setLevel(logging.DEBUG)
 
