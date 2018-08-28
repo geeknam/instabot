@@ -185,6 +185,7 @@ class API(object):
                 response_data = json.loads(response.text)
                 msg = "Instagram's error message: {}"
                 self.logger.info(msg.format(response_data.get('message')))
+                self.logger.error(response_data)
                 if 'error_type' in response_data:
                     msg = 'Error type: {}'.format(response_data['error_type'])
                     self.logger.info(msg)
