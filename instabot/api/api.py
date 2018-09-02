@@ -190,6 +190,9 @@ class API(object):
                     msg = 'Error type: {}'.format(response_data['error_type'])
                     self.logger.info(msg)
 
+                if login and response_data.get('message') == 'challenge_required':
+                    return response_data
+
             # For debugging
             try:
                 self.last_response = response
