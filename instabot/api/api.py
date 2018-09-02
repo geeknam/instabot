@@ -89,8 +89,12 @@ class API(object):
                     'password': self.password,
                     'login_attempt_count': '0',
                 })
-
-                if self.send_request('accounts/login/', data, True):
+                login_response = self.send_request(
+                    'accounts/login/', data, True
+                )
+                if isinstance(login_response, dict):
+                    return login_response
+                if login_response is True:
                     self.is_logged_in = True
                     self.logger.info("Logged-in successfully as '{}'!".format(self.username))
                     if use_cookie:
