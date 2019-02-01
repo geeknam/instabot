@@ -149,13 +149,13 @@ class Bot(object):
         self._usernames = {}  # `username` to `user_id` mapping
 
         # Database files
-        self.followed_file = utils.file(followed_file)
-        self.unfollowed_file = utils.file(unfollowed_file)
-        self.skipped_file = utils.file(skipped_file)
-        self.friends_file = utils.file(friends_file)
-        self.comments_file = utils.file(comments_file)
-        self.blacklist_file = utils.file(blacklist_file)
-        self.whitelist_file = utils.file(whitelist_file)
+        self.followed_file = utils.s3_file(followed_file)
+        self.unfollowed_file = utils.s3_file(unfollowed_file)
+        self.skipped_file = utils.s3_file(skipped_file)
+        self.friends_file = utils.s3_file(friends_file)
+        self.comments_file = utils.s3_file(comments_file)
+        self.blacklist_file = utils.s3_file(blacklist_file)
+        self.whitelist_file = utils.s3_file(whitelist_file)
 
         self.proxy = proxy
         self.verbosity = verbosity
