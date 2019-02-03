@@ -18,6 +18,7 @@ import six.moves.urllib as urllib
 from tqdm import tqdm
 
 from . import config, devices
+from ..utils import s3_file
 from .api_photo import configure_photo, download_photo, upload_photo
 from .api_video import configure_video, download_video, upload_video
 from .prepare import delete_credentials, get_credentials
@@ -114,9 +115,11 @@ class API(object):
             FileNotFoundError = IOError
 
         try:
-            with open(fname, 'r') as f:
-                self.session = requests.Session()
-                self.session.cookies = requests.utils.cookiejar_from_dict(json.load(f))
+            cookie_content = s3_file(fname).get_file().read()
+            self.session = requests.Session()
+            self.session.cookies = requests.utils.cookiejar_from_dict(
+                json.loads(cookie_content)
+            )
             cookie_username = self.cookie_dict['ds_user']
             assert cookie_username == self.username
         except FileNotFoundError:
@@ -131,8 +134,8 @@ class API(object):
             raise Exception(msg.format(cookie_username, self.username))
 
     def save_cookie(self, fname):
-        with open(fname, 'w') as f:
-            json.dump(requests.utils.dict_from_cookiejar(self.session.cookies), f)
+        cookie_content = requests.utils.dict_from_cookiejar(self.session.cookies)
+        s3_file(fname).write_file(json.dumps(cookie_content))
 
     def logout(self):
         if not self.is_logged_in:
